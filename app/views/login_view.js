@@ -9,6 +9,12 @@ module.exports = View.extend({
       "click .steam-login": "login"
    },
    
+   getRenderData: function() {
+      return {
+         loggedIn: Backbone.user.get('loggedIn')
+      };
+   },
+   
    login: function() {
       console.log("Logging in to steam.");
    }

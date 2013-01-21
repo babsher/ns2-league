@@ -9,9 +9,9 @@ exports.config =
         'test/javascripts/test.js': /^test(\/|\\)(?!vendor)/
       order:
         before: [
-           'vendor/scripts/boostrap.js',
-           'vendor/scripts/console-helper.js',
+           'vendor/scripts/console-helper.js'
            'vendor/scripts/jquery-1.7.2.js',
+           'vendor/scripts/boostrap.js',
            'vendor/scripts/underscore-1.3.3.js',
            'vendor/scripts/backbone-0.9.9.js'
         ]
@@ -22,7 +22,8 @@ exports.config =
       order:
         before: [
            'vendor/styles/normalize.css',
-           'vendor/styles/bootstrap.css'
+           'vendor/styles/bootstrap.css',
+           'bootstrap-responsive.css'
            ]
         after: ['vendor/styles/helpers.css']
 
