@@ -7,6 +7,9 @@ Main languages are JavaScript,
 
 ## Getting started
 
-Run `brunch new <app> -s github://brunch/simple-js-skeleton` & `brunch build`.
-See more info on the [official site](http://brunch.io)
+npm install -g brunch
+npm install -g nodemon
+
+brunch watch 
+nodemon ./server.js
 
