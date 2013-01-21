@@ -7,8 +7,11 @@ Main languages are JavaScript,
 
 ## Getting started
 
+install mongo
+
 npm install -g brunch
 npm install -g nodemon
+npm install
 
 brunch watch 
 nodemon ./server.js
