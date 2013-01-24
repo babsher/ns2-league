@@ -10,3 +10,11 @@ Handlebars.registerHelper("debug",
       }
    }
 );
+
+Handlebars.registerHelper("active",
+   function(value){
+      if(value) {
+         return new Handlebars.SafeString("active");
+      }
+   }
+);

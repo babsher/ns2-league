@@ -2,7 +2,10 @@
 module.exports = require('./model').extend({
    
    defaults: {
-      loggedIn: false
+      loggedIn: false,
+      username: "",
+      password: "",
+      session: ""
    },
    
    toggleLogin: function() {

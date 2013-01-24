@@ -20,23 +20,37 @@ app.use(express.session({
 }));
 
 app.get('/auth/steam',
-   passport.authenticate('steam'),
+   passport.authenticate('steam', { failureRedirect: '/' }),
    function(req, res){
       // The request will be redirected to Steam for authentication, so
       // this function will not be called.
    });
 
-app.get('/auth/steam/callback',
-   passport.authenticate('steam', { failureRedirect: '/login' }),
+app.get('/auth/steam/return',
+   passport.authenticate('steam', { failureRedirect: '/' }),
    function(req, res) {
       // Successful authentication, redirect home.
-      res.redirect('/');
+      res.redirect('/user');
+});
+
+app.get('/user', ensureAuthenticated, function(req, res){
+   res.send(200, 'hello')
 });
 
 app.get('/logout', function(req, res){
   req.logout();
   res.redirect('/');
 });
+
+// Simple route middleware to ensure user is authenticated.
+//   Use this route middleware on any resource that needs to be protected.  If
+//   the request is authenticated (typically via a persistent login session),
+//   the request will proceed.  Otherwise, the user will be redirected to the
+//   login page.
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) { return next(); }
+  res.redirect('/login')
+}
 
 function errorHandler(err, req, res, next) {
   res.status(500);

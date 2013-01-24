@@ -1,18 +1,19 @@
 var View = require('./view');
 var template = require('./templates/nav');
-var application = require('../application');
+// var application = require('../application');
 
 module.exports = View.extend({
    id: 'login-view',
    template: template,
    
-   init: function() {
+   init: function(application) {
       application.router.on('route:home', function(){console.log(arguments); this.select('home')}, this);
       application.router.on('route:about', function(){this.select('about')}, this);
       application.router.on('route:pickup', function(){this.select('pickup')}, this);
       application.router.on('route:forum', function(){this.select('forum')}, this);
    },
    
+   // Pages State machine
    current: 'home',
    pages: {
       home: false,
