@@ -28,10 +28,15 @@ var object = Backbone.View.extend({
          selectors = {};
          selectors[selector] = view;
       }
-      if (!selectors) return;
-         _.each(selectors, function (view, selector) {
-         view.setElement(this.$(selector)).render();
-      }, this);
+      if (!selectors) { return; }
+      
+      _.each(selectors, function (view, selector) {
+            if(view) {
+               view.setElement(this.$(selector)).render();
+            } else {
+               console.log("View is undefined for selector " + selector);
+            }
+         }, this);
    }
 });
 

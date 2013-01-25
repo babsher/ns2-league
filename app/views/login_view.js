@@ -17,5 +17,9 @@ module.exports = View.extend({
    
    login: function() {
       console.log("Logging in to steam.");
+      Backbone.user.id='1234';
+      Backbone.user.save();
+      //Backbone.sync('read', Backbone.user, {url: '/users/:id'});
+      console.log(Backbone.user);
    }
 });

@@ -37,6 +37,12 @@ app.get('/user', ensureAuthenticated, function(req, res){
    res.send(200, 'hello')
 });
 
+app.put('/api/users/:id', function(req, res){
+   console.log(req.session);
+   req.session.userId = req.params.id;
+   res.send({id: '1234', username:'a guy'});
+});
+
 app.get('/logout', function(req, res){
   req.logout();
   res.redirect('/');

@@ -18,7 +18,6 @@ Application = {
     this.router = new Router();
     if (typeof Object.freeze === 'function') Object.freeze(this);
     this.navView.init(this);
-    this.router.on('all', function(){console.log(arguments)});
   }
 }
 

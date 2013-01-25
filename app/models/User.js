@@ -1,11 +1,14 @@
 // User Model
 module.exports = require('./model').extend({
    
+   urlRoot: '/api/users',
+   
    defaults: {
       loggedIn: false,
       username: "",
       password: "",
-      session: ""
+      session: "",
+      pickup: ""
    },
    
    toggleLogin: function() {

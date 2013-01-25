@@ -7,10 +7,10 @@ module.exports = View.extend({
    template: template,
    
    init: function(application) {
-      application.router.on('route:home', function(){console.log(arguments); this.select('home')}, this);
-      application.router.on('route:about', function(){this.select('about')}, this);
+      application.router.on('route:home',   function(){this.select('home')}, this);
+      application.router.on('route:about',  function(){this.select('about')}, this);
       application.router.on('route:pickup', function(){this.select('pickup')}, this);
-      application.router.on('route:forum', function(){this.select('forum')}, this);
+      application.router.on('route:forum',  function(){this.select('forum')}, this);
    },
    
    // Pages State machine
@@ -26,7 +26,6 @@ module.exports = View.extend({
       this.pages[this.current] = false;
       this.pages[page] = true;
       this.current = page;
-      console.log(this.pages);
       $('.navbar').html(this.render().el);
    },
    
