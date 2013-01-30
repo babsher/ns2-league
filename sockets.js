@@ -1,7 +1,6 @@
 var settings = require('./settings');
-var app = require('./application');
 
-module.exports.configure = function(io) {
+module.exports.configure = function(io, sessionStore) {
    /*io.sockets.on('connection', function (socket) {
       socket.emit('news', { hello: 'world' });
       socket.on('my other event', function (data) {
@@ -10,7 +9,7 @@ module.exports.configure = function(io) {
    });*/
 
    io.sockets.on("connection", function(socket){
-      socket.sessionStore = app.sessionStore;
+      socket.sessionStore = sessionStore;
    });
 
 };

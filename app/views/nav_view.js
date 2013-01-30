@@ -1,10 +1,11 @@
 var View = require('./view');
+var LoginView = require('./login_view');
 var template = require('./templates/nav');
-// var application = require('../application');
 
 module.exports = View.extend({
-   id: 'login-view',
+   id: 'nav-view',
    template: template,
+   login: new LoginView(),
    
    init: function(application) {
       application.router.on('route:home',   function(){this.select('home')}, this);
@@ -31,5 +32,11 @@ module.exports = View.extend({
    
    getRenderData: function() {
       return this.pages;
+   },
+   
+   afterRender: function(){
+      this.assign( {
+         '.login-view': this.login
+      });
    }
 });

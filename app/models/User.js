@@ -1,13 +1,11 @@
 // User Model
 module.exports = require('./model').extend({
    
-   urlRoot: '/api/users',
+   url: function() {return '/api/user/current';},
    
    defaults: {
       loggedIn: false,
       username: "",
-      password: "",
-      session: "",
       pickup: ""
    },
    

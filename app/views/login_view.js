@@ -1,25 +1,21 @@
 var View = require('./view');
+var User = require('../models/User');
 var template = require('./templates/login');
 
 module.exports = View.extend({
    id: 'login-view',
    template: template,
    
-   events: {
-      "click .steam-login": "login"
+   initialize: function() {
+      this.model = new User();
+      this.model.on('change', this.render, this);
+      this.model.fetch();
    },
    
    getRenderData: function() {
       return {
-         loggedIn: Backbone.user.get('loggedIn')
+         loggedIn: this.model.get('loggedIn'),
+         username: this.model.get('username')
       };
-   },
-   
-   login: function() {
-      console.log("Logging in to steam.");
-      Backbone.user.id='1234';
-      Backbone.user.save();
-      //Backbone.sync('read', Backbone.user, {url: '/users/:id'});
-      console.log(Backbone.user);
    }
 });

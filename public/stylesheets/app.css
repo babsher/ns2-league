@@ -7220,7 +7220,10 @@ body {
   cursor: pointer;
 }
 .login-view {
-  float: right;
+  color: #fff;
+}
+a:visited {
+  color: #808080;
 }
 .ir { display: block; border: 0; text-indent: -999em; overflow: hidden; background-color: transparent; background-repeat: no-repeat; text-align: left; direction: ltr; *line-height: 0; }
 .ir br { display: none; }
