@@ -1,4 +1,6 @@
+var Chaplin = require('chaplin');
+
 // Base class for all models.
-module.exports = Backbone.Model.extend({
+module.exports = Chaplin.Model.extend({
    
 });

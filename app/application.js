@@ -1,29 +1,43 @@
+var Chaplin = require('chaplin');
+var Layout = require('views/layout');
+var routes = require('routes');
+
+// Global Controllers
+var NavigationController = require('./controller/navigation-controller');
+var SessionController = require('./controllers/session-controller');
+
 // Application bootstrapper.
-Application = {
+module.exports = Chaplin.Application.extend({
+   title: 'NS2-League',
+
    initialize: function() {
-      var HomeView = require('views/home_view');
-      var AboutView = require('views/about_view');
-      var NavView = require('views/nav_view');
-      var PickupView = require('views/pickup_view');
-      var LoginView = require('views/login_view');
-      var Router = require('lib/router');
-      var User = require('models/User');
-      
-      // Ideally, initialized classes should be kept in controllers & mediator.
-      // If you're making big webapp, here's more sophisticated skeleton
-      // https://github.com/paulmillr/brunch-with-chaplin
-      Backbone.user = new User();
-      this.homeView = new HomeView({model: new User()});
-      this.aboutView = new AboutView();
-      this.pickupView = new PickupView();
-      this.navView = new NavView();
-      this.router = new Router();
-      this.loginView = new LoginView();
+      Chaplin.Application.prototype.initialize.apply(this, arguments);
+      this.initDispatcher();
+      this.initLayout();
+      this.initMediator();
+
+      this.initControllers();
+      this.initRouter(routes);
+
       if (typeof Object.freeze === 'function') Object.freeze(this);
-      this.navView.init(this);
+   },
 
-      Backbone.user.fetch();
-  }
-}
-
-module.exports = Application;
+   initLayout: function() {
+      // Use an application-specific Layout class. Currently this adds
+      // no features to the standard Chaplin Layout, it’s an empty placeholder.
+      this.layout = new Layout({title: this.title});
+   },
+   
+   initControllers: function(){
+      new NavigationController();
+      new SessionController();
+   },
+   
+   initMediator: function() {
+      // Create a user property
+      Chaplin.mediator.user = null;
+      // Add additional application-specific properties and methods
+      // Seal the mediator
+      Chaplin.mediator.seal();
+   }
+};

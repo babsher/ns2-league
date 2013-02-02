@@ -1,4 +1,6 @@
+var Chaplin = require('chaplin');
+
 // Base class for all collections.
-module.exports = Backbone.Collection.extend({
+module.exports = Chaplin.Collection.extend({
   
 });

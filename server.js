@@ -1,6 +1,6 @@
 var MongoClient = require('mongodb').MongoClient;
 var settings = require('./settings');
-var UserApi = require('./api/UserApi');
+// var UserApi = require('./api/UserApi');
 var _db = null;
 
 function connectMongo() {
