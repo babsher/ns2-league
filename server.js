@@ -2,23 +2,26 @@ var MongoClient = require('mongodb').MongoClient;
 var settings = require('./settings');
 var UserApi = require('./api/UserApi');
 var _db = null;
+var userApi = null;
 
 function connectMongo() {
    MongoClient.connect(settings.mongoUri, function(err, result) {
-      if(err) {return console.dir(err);}
+      if(err) {
+         return console.dir(err);
+      }
       _db = result;
       configureAuthentication();
    });
 }
 
 function configureAuthentication() {
-   new UserApi(_db, function(err, userApi) {
-      var passport = require('./passport')(userApi);
-      configureExpress(passport);
-   });
+   userApi = new UserApi(_db, function(err, api) {});
+   var passport = require('./passport')(userApi);
+   configureExpress(passport);
 }
 
 function configureExpress(passport) {
+   
    var express = require('express');
    var app = express();
    var MongoStore = require('connect-mongo')(express);

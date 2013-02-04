@@ -9,6 +9,27 @@ module.exports = function(userApi) {
       apiKey: config.steamKey,
       format: 'json'
    });
+   
+   var createUser = function(profile, done){
+      s.getPlayerSummaries({
+         steamids: [profile.steamid],
+         callback: function(err, data) {
+            console.log('creating user', data);
+            if(err) {
+               done(err);
+               return console.dir(err);
+            }
+            if(data.response.players && data.response.players[0]) {
+               var player = data.response.players[0];
+               console.dir(player);
+               profile.user = {username: player.personaname};
+               userApi.updateUserProfile(profile.steamid, profile.user, function(){
+                  done(null, profile);
+               });
+            }
+         }
+      });
+   }
 
    passport.serializeUser(function(user, done) {
       done(null, user);
@@ -25,29 +46,31 @@ module.exports = function(userApi) {
    passport.use(new SteamStrategy({
          returnURL: 'http://' + config.hostname + '/auth/steam/return',
          realm: 'http://' + config.hostname + '/'
-         //,profile: true
       },
       function(identifier, profile, done) {
          // asynchronous verification, for effect...
          process.nextTick(function () {
-            console.log('Got profile ' + profile);
-            console.log(profile);
-
             // To keep the example simple, the user's Steam profile is returned to
             // represent the logged-in user.  In a typical application, you would want
             // to associate the Steam account with a user record in your database,
             // and return that user instead.
             profile.identifier = identifier;
             
-            var id = idReg.exec(identifier);
-            if(id) {
-               profile.steamid = id[1];
-               s.getPlayerSummaries({
-                  steamids: [profile.steamid],
-                  callback: function(err, data) {
-                     console.log('Profile ' + JSON.stringify(data));
-                     profile.username = data.response.players[0].personaname;
+            var idResult = idReg.exec(identifier);
+            if(idResult && idResult[1] && idResult[1] != "") {
+               profile.steamid = idResult[1];
+               userApi.getUserProfile(profile.steamid, function(err, result){
+                  if(err) {
+                     done(err);
+                     return console.dir(err);
+                  }
+                  
+                  if(result){    // if we got a user already stored with that id
+                     console.log('got profile', result);
+                     profile.user = result;
                      done(null, profile);
+                  } else {       // Create a new user
+                     createUser(profile, done);
                   }
                });
             }

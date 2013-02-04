@@ -19,11 +19,11 @@ Application = {
       this.navView = new NavView();
       this.router = new Router();
       this.loginView = new LoginView();
-      if (typeof Object.freeze === 'function') Object.freeze(this);
+      if (typeof Object.freeze === 'function') {Object.freeze(this);}
       this.navView.init(this);
 
       Backbone.user.fetch();
   }
-}
+};
 
 module.exports = Application;
