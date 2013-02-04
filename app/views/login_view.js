@@ -1,5 +1,5 @@
 var View = require('./view');
-var User = require('../models/User');
+var Session = require('../models/Session');
 var template = require('./templates/login');
 
 module.exports = View.extend({
@@ -7,15 +7,15 @@ module.exports = View.extend({
    template: template,
    
    initialize: function() {
-      this.model = new User();
+      this.model = Backbone.mediator.session;
       this.model.on('change', this.render, this);
       this.model.fetch();
    },
    
    getRenderData: function() {
       return {
-         loggedIn: this.model.get('loggedIn'),
-         username: this.model.get('username')
+         loggedIn: Backbone.mediator.session.get('loggedIn'),
+         username: Backbone.mediator.session.get('username')
       };
    }
 });

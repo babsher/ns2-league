@@ -1,6 +1,7 @@
 // User collection
 var users = null;
 var _db = null;
+var collectionName = 'users';
 
 function _default(callback) {
    callback = typeof(callback) === 'function' ? 
@@ -27,7 +28,7 @@ var UserApi = module.exports = function(db, callback) {
 };
 
 UserApi.prototype.getUserProfile = function(id, callback) {
-   _db.collection('users', function (err, users) {
+   _db.collection(collectionName, function (err, users) {
       if(err) {
          console.dir(err);
       } else {
@@ -38,7 +39,7 @@ UserApi.prototype.getUserProfile = function(id, callback) {
 
 UserApi.prototype.updateUserProfile = function(id, profile, callback) {
    console.log('updating ', id);
-   _db.collection('users', function (err, users) {
+   _db.collection(collectionName, function (err, users) {
       if(err) {
          console.dir(err);
       } else {
