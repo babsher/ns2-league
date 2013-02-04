@@ -1,4 +1,4 @@
-// User Model
+// Session Model
 module.exports = require('./model').extend({
    
    url: function() {return '/api/user/current';},
