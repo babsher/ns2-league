@@ -9,13 +9,17 @@ module.exports = function(app, db) {
       res.send(404, 'User not authenticated');
    }
    
-   app.get('/api/user/current', ensureAuthenticated, function(req, res){
+   app.get('/api/user/current', function(req, res){
       if(req.session &&
          req.session.passport &&
          req.session.passport.user &&
          req.session.passport.user.steamid) {
          
          res.send({username: req.session.passport.user.username, loggedIn: true});
+         console.dir(req.session.passport);
+      } else {
+         console.dir(req.session.passport);
+         res.send(200, '{}');
       }
    });
-}
+};

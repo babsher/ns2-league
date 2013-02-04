@@ -10,20 +10,19 @@ module.exports = function(userApi) {
       format: 'json'
    });
    
-   var createUser = function(profile, done){
+   function createUser(profile, steamid, done){
       s.getPlayerSummaries({
          steamids: [profile.steamid],
          callback: function(err, data) {
-            console.log('creating user', data);
             if(err) {
                done(err);
                return console.dir(err);
             }
             if(data.response.players && data.response.players[0]) {
                var player = data.response.players[0];
-               console.dir(player);
-               profile.user = {username: player.personaname};
-               userApi.updateUserProfile(profile.steamid, profile.user, function(){
+               profile.username = player.personaname;
+               profile.steamid = steamid;
+               userApi.updateUserProfile(profile.steamid, profile, function(){
                   done(null, profile);
                });
             }
@@ -59,6 +58,7 @@ module.exports = function(userApi) {
             var idResult = idReg.exec(identifier);
             if(idResult && idResult[1] && idResult[1] != "") {
                profile.steamid = idResult[1];
+               var steamid = idResult[1];
                userApi.getUserProfile(profile.steamid, function(err, result){
                   if(err) {
                      done(err);
@@ -66,11 +66,11 @@ module.exports = function(userApi) {
                   }
                   
                   if(result){    // if we got a user already stored with that id
-                     console.log('got profile', result);
-                     profile.user = result;
+                     console.log('Loaded profile for user', result);
+                     profile = result;
                      done(null, profile);
                   } else {       // Create a new user
-                     createUser(profile, done);
+                     createUser(profile, steamid, done);
                   }
                });
             }
