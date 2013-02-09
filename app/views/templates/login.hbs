@@ -1,5 +1,5 @@
 {{#if loggedIn }}
-<p>Welcome back, <strong>{{username}}</strong>! <a  href='/logout'>Logout</a></p>
+<p>Welcome back, <a href="#forums/profile/{{steamid}}" ><strong>{{username}}</strong></a>!<br/><a  href='/logout'>Logout</a></p>
 {{else}}
 <a href="/auth/steam" class="steam-login"><img src="http://cdn.steamcommunity.com/public/images/signinthroughsteam/sits_small.png"/></a>
 {{/if}}

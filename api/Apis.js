@@ -1,8 +1,21 @@
 var UserApi = require('./UserApi');
+var ForumsApi = require('./ForumsApi');
 
 module.exports = function(app, db) {
    
    var userApi = new UserApi(db);
+   var forumsApi = new ForumsApi(db);
+   
+   function format(data){
+      if(Array.isArray(data)){
+         for(var i = 0; i < data.length; i++){
+            data[i] = format(data[i]);
+         }
+      } else {
+         data.id = data._id;
+      }
+      return data;
+   }
    
    function ensureAuthenticated(req, res, next) {
       if (req.isAuthenticated()) {
@@ -54,13 +67,14 @@ module.exports = function(app, db) {
                res.send(500,"Server error");
                return;
             }
-            res.send(200, result)
+            var obj = result;
+            obj.id = result._id;
+            res.send(200, obj);
          }
       );
    });
    
    app.post('/api/users/:id', ensureAuthenticated, function(req, res) {
-      console.dir(req);
       userApi.updateUserProfile(
          req.params.id,
          {}, // TODO add profile here
@@ -78,6 +92,13 @@ module.exports = function(app, db) {
    // ------------------ Forum API ---------------------------
    
    app.get('/api/forums', function(req, res){
-      res.send(200, [{name: 'f1'}, {name:'f2'}]);
+      forumsApi.getForums(function(err, results){
+         if(err){
+            console.dir(err);
+            res.send(500, "Server Error");
+            return;
+         }
+         res.json(200, format(results));
+      });
    });
 };

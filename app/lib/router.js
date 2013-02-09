@@ -7,32 +7,32 @@ module.exports = Backbone.Router.extend({
       'about': 'about',
       'forums': 'forums',
       'pickup': 'pickup',
-      'forums/profile/:id' : 'profile'
+      'forums/profile/:id' : 'profile',
+      'forums/:forumId' : 'forum'
    },
 
    home: function() {
-      // application.navView.trigger('nav:home');
       $("#content").html(application.homeView.render().el);
    },
 
    about: function() {
-      // application.navView.trigger('nav:about');
       $("#content").html(application.aboutView.render().el);
    },
 
    pickup: function() {
-      // application.navView.trigger('nav:pickup');
       $('#content').html(application.pickupView.render().el);
    },
 
    forums: function() {
-      // application.navView.trigger('nav:forum');
       $("#content").html(application.forumsView.render().el);
+   },
+   
+   forum: function(forumId) {
+      threadsView.options.forumId = forumId;
+      $("#content").html(application.threadsView.render().el);
    },
 
    profile: function(id) {
-      console.log(arguments);
-      // application.navView.trigger('nav:forum');
       var user = new User();
       user.set('id', id);
       application.profileView.setModel(user);
