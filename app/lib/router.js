@@ -8,7 +8,8 @@ module.exports = Backbone.Router.extend({
       'forums': 'forums',
       'pickup': 'pickup',
       'forums/profile/:id' : 'profile',
-      'forums/:forumId' : 'forum'
+      'forums/:forumId' : 'forum',
+      'forums/:forumId/:threadId': 'thread'
    },
 
    home: function() {
@@ -28,8 +29,14 @@ module.exports = Backbone.Router.extend({
    },
    
    forum: function(forumId) {
-      threadsView.options.forumId = forumId;
+      application.threadsView.options.forumId = forumId;
       $("#content").html(application.threadsView.render().el);
+   },
+   
+   thread: function(forumId, threadId){
+      application.threadView.options.forumId = forumId;
+      application.threadView.options.threadId = threadId;
+      $("#content").html(application.threadView.render().el);
    },
 
    profile: function(id) {
